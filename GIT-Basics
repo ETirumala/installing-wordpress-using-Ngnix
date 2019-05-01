@@ -1,0 +1,69 @@
+git command reads the database status of the repository
+git status                            -       it going to compare the files with working directory. it compare your files with working directory and local repository.
+git add .                             -       it will add file
+git add --all
+git commit -m "message"               -       it give the information when did it change which user is changed
+git log                               -       it will show the commited  details used add when did it added or commited and you can see the commit id
+git diff                              -       it will compare the difference what changes done to the source code.
+git diff --staged                     -       it will compare the files between local directory and staged directory
+git reset HEAD filename               -       the file has been unstage from the stageing area(means the directory or file is wrong but u added to the file but u want to remove so you will unstage by reseting )
+git log --oneline                     -       it will display in consize means in small format
+git diff HEAD~1                       -       it will compare between commits for example git diff HEAD~1 it will compare latest commit and previous commit (latest commit -1)
+git log commit-id2 commit-id3         -       it will compare and give output of commit-id2 and commit-id3
+git checkout HEAD-2 filename          -       it will restore the file to previous commits
+git remote -v                         -       shows the remote configuration(it means providng server location )
+git remote add <reference name> <repository url> -
+
+Collaborators                          -         add user or team member giving permission for editing your file or giving access to write the Code
+branch protection rules
+branching means the diff copy of code in same repository that means the default branch is master v dont push the code directly so v use branch thier v test and check wheather the code is correct or not.
+Feature Branch Flow
+Steps to be Performed when we are going to work on a repository/code base in git environment.
+
+1. First clone the master repository to ur local machine
+2. Create a new branch with relevant name in ur local
+3. Make the changes
+4. Save those changes to that specific branch
+5. Now push the new branch to the remote/central
+6. Get the changes fully tested and once they are fine
+7. Raise a PULL request: TO raise a merge request for the current branch to merge with the master/ur required branch which needs to be approved by the owner of the repository.
+   raising a request to the lead/owner of the repository to merge the current branch with the master integration branch.
+8. Get it approved
+9. Remove the newly created branch.
+git branch branchname                -        creating branch
+git branch -a                        -        You can view Total number of branches in the repository
+git status                           -        After creating branch we check on which branch it is located so we can use git status
+git checkout branchname              -        you will move master  to branch given
+
+Raise PULL request to the owner of the repository to merge ur branch to master branch
+Why do we need to raise the request means?
+we always deploy master branch code to production.
+if we merge the code of branch onto master, the changes will be added on top of master.
+requiring a approval for a merge request is known merge request
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Management Features
+UI layer/Application -  when mang teaam they wont run every time so ui layer is requre
+Security to Code : light weight direct access protocol(LDAP) (A centralized authentication server),  Roll based access control
+LDAP, I hve RBAC
+Logging the application :
+Auditing: which user is performing what operation of the files
+notification system : email
+Backup system:automaticaly take the backup for every one hour or if given time
+Maintaing Collabration
