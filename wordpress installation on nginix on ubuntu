@@ -49,7 +49,7 @@ sudo systemctl Start mariadb.service
 #Enabling the mariadb service
 sudo systemctl enable mariadb.service
 
-# After enabling mariadb run myswl secure installation
+# After enabling mariadb run mysql secure installation
 sudo mysql_secure_installation
 
 #When prompted, answer the questions below by following the guide.

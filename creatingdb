@@ -1,0 +1,78 @@
+#Editing php.ini file by scrolling down the lines in the file and changing the fllowing lines below and save
+
+  post_max_size = 100M
+  memory_limit = 256M
+  max_execution_time = 360
+  upload_max_filesize = 100M
+  date.timezone = America/Chicago
+
+
+After Editing php.ini we have to create DATABASE
+#CREATE A BLANK WORDPRESS DATABASE
+  sudo mysql -u root -p
+#Then create a blank database called WP_database  you can use the same database name from the old server.
+  CREATE DATABASE WP_arvisat;
+#Create a database user called wp_user with new password.  You can use the same username and password from the old server.
+  CREATE USER 'wp_arvisat'@'localhost' IDENTIFIED BY 'sathya';
+#Then grant the user full access to the database.
+  GRANT ALL ON WP_arvisat.* TO 'wp_arvisat'@'localhost' IDENTIFIED BY 'sathyapriya' WITH GRANT OPTION;
+#Finally, save your changes and exit.
+  FLUSH PRIVILEGES;
+  EXIT;
+
+DOWNLOAD WORDPRESS LATEST RELEASE
+
+  cd /var/www/html
+  sudo wget https://wordpress.org/latest.tar.gz
+  tar -zxvf latest.tar.gz
+
+Then run the commands below to set the correct permissions for WordPress root directory.
+  cd /opt
+  sudo chown -R www-data:www-data /var/www/html/wordpress/
+  sudo chmod -R 755 /var/www/html/wordpress/
+
+CONFIGURE WORDPRESS
+  cd /var/www/html/wordpress
+  mv wp-config-sample.php wp-config.php
+  vim wp-config.php
+
+#Enter the highlighted text below that you created for your database and save.
+  // ** MySQL settings - You can get this info from your web host ** //
+  /** The name of the database for WordPress */
+  define('DB_NAME', 'WP_arvisat');
+
+  /** MySQL database username */
+  define('DB_USER', 'WP_arvisat');
+
+  /** MySQL database password */
+  define('DB_PASSWORD', 'sathya');
+
+#CONFIGURE THE NEW WORDPRESS SITE
+  cd /etc/nginx/sites-available
+  vim wordpress
+
+#Then copy and paste the content below into the file and save it. Replace example.com with your own domain name.
+  server {
+  listen 80;
+  listen [::]:80;
+  root /var/www/html/wordpress;
+  index  index.php index.html index.htm;
+  server_name  ec2-18-218-112-128.us-east-2.compute.amazonaws.com;
+
+  client_max_body_size 100M;
+
+  location / {
+      try_files $uri $uri/ /index.php?$args;
+  }
+
+  location ~ \.php$ {
+  include snippets/fastcgi-php.conf;
+  fastcgi_pass             unix:/var/run/php/php7.2-fpm.sock;
+  fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  }
+  }
+#Now all is configured… run the commands below to reload Nginx web server and PHP-FPM settings.
+  sudo systemctl restart nginx.service
+  sudo systemctl restart php7.2-fpm.service
+
+#After restarting Nginx, open your browser and browse to the server IP address or hostname. If everything was setup correctly, you should see WordPress default configuration wizard.
